@@ -1,5 +1,5 @@
 from auth import tweepy, api, user
-import json
+import time
 
 FILENAME = 'data\\numFollowers.txt'
 LAST_SEEN_ID = 'data\\lastseenID.txt'
@@ -15,7 +15,9 @@ def follow_all():
 def searchbyNumbers(search):
     results = api.search(search, lang='el', show_user=True, tweet_mode='extended')
     for result in results:
+        print("-----------------------------------------------------------------------------")
         print(result.author.name + " ---> " + result.full_text + "|| " + str(result.created_at))
+        time.sleep(2)
 
 
 def retrieve(filename):
@@ -95,3 +97,10 @@ def delete_tweet(identifier):
     except tweepy.error.TweepError as err:
         err.reason()
     
+def show_timelline():
+    messages = api.home_timeline(tweet_mode='extended')
+    for message in messages:
+        print("-----------------------------------------------")
+        print("-----------------------" + message.author.name + "------------------------")
+        print(message.full_text)
+        time.sleep(2)
